@@ -8,7 +8,6 @@
  */
 
 #include "simpletokenizer.h"
-#include <iostream>
 #include <sstream>
 
 void SimpleTokenizer::tokenize(const std::string & input, std::vector<Token> & output) {
