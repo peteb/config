@@ -20,6 +20,7 @@ enum BuiltinToken {
 	TokenVerbatim = 1,
 	TokenString,
 	TokenNumeric,
+	TokenUser = 20,
 };
 
 class SimpleTokenizer {
