@@ -68,7 +68,7 @@ void PropertyTreeParser::parseBlock(PropertyNode & node) {
 		}
 		else if (token.first == PropertyTokenBlockEnd) {
 			if (--braceCount < 0)
-				throw BadBlock("closing block without starting one");
+				throw BadBlock("closing block with none opened");
 			
 			if (!attributes.empty()) {
 				addLine(attributes, node);
