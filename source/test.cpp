@@ -58,7 +58,11 @@ int main(int argc, const char ** argv) {
 	
 	std::stringstream ss;
 	PropertyTreePrinter newPrinter(ss);
-	newPrinter.print(newRoot, false);
+	//newPrinter.print(newRoot, false);
+	
+	ss << "abc {";
+	ss << "   key value\n";
+	ss << "}tja {key value\n}";
 	
 	std::cout << "SS: " << std::endl << ss.str() << std::endl;
 	

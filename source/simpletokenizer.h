@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stdexcept>
 
 typedef std::pair<int, std::string> Token;
 

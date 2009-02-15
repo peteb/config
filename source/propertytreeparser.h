@@ -12,11 +12,17 @@
 
 #include "propertynode.h"
 #include "simpletokenizer.h"
+#include <stdexcept>
 
 enum PropertyTreeTokens {
-	PropertyTokenBlockStart = 100,
+	PropertyTokenBlockStart = TokenUser,
 	PropertyTokenBlockEnd,
 	PropertyTokenEOL,
+};
+
+class BadBlock : public std::runtime_error {
+public:
+	BadBlock(const std::string & message) : std::runtime_error(message) {}
 };
 
 class PropertyTreeParser {
@@ -28,7 +34,7 @@ private:
 	void addLine(const std::vector<std::string> & line, PropertyNode & node) const;
 	
 	std::vector<Token> tokens;
-	int currentToken;
+	int currentToken, braceCount;
 };
 
 #endif // !CONFIG_PROPERTYTREEPARSER_H

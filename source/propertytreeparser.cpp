@@ -34,7 +34,7 @@ PropertyNode PropertyTreeParser::parse(const std::string & input) {
 	
 	PropertyNode root("root");
 	
-	currentToken = 0;
+	braceCount = currentToken = 0;
 	parseBlock(root);
 		
 	return root;
@@ -48,24 +48,33 @@ void PropertyTreeParser::parseBlock(PropertyNode & node) {
 		const Token & token = tokens[currentToken];
 		
 		if (token.first == PropertyTokenBlockStart) {
-			PropertyNode newNode(attributes.at(0));
+			++braceCount;
 			
-			for (int i = 1; i < attributes.size(); ++i)
-				newNode.addAttribute(attributes[i]);
+			try {
+				PropertyNode newNode(attributes.at(0));
 			
-			attributes.clear();
+				for (int i = 1; i < attributes.size(); ++i)
+					newNode.addAttribute(attributes[i]);
 			
-			++currentToken;
-			parseBlock(newNode);
-			node.addNode(newNode);
+				attributes.clear();
+			
+				++currentToken;
+				parseBlock(newNode);
+				node.addNode(newNode);
+			}
+			catch (const std::out_of_range & e) {
+				throw BadBlock("missing block name");
+			}
 		}
 		else if (token.first == PropertyTokenBlockEnd) {
+			if (--braceCount < 0)
+				throw BadBlock("closing block without starting one");
+			
 			if (!attributes.empty()) {
 				addLine(attributes, node);
 				attributes.clear();
 			}
 			
-			++currentToken;
 			break;
 		}
 		else if (token.first == PropertyTokenEOL) {
