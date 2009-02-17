@@ -45,6 +45,7 @@ void SimpleTokenizer::tokenize(const std::string & input, std::vector<Token> & o
 		}
 	}
 	
+	
 	addLastToken(output);
 }
 
